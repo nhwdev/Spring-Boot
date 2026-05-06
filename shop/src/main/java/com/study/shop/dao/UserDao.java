@@ -1,0 +1,60 @@
+package com.study.shop.dao;
+
+import com.study.shop.dao.mapper.UserMapper;
+import com.study.shop.dto.User;
+import org.mybatis.spring.SqlSessionTemplate;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+@Repository
+public class UserDao {
+    @Autowired
+    private SqlSessionTemplate template;
+    private Map<String, Object> param = new HashMap<>();
+    private Class<UserMapper> cls = UserMapper.class;
+
+    public void insert(User user) {
+        template.getMapper(cls).insert(user);
+    }
+
+    public User selectOne(String userid) {
+        return template.getMapper(cls).selectOne(userid);
+    }
+
+    public void update(User user) {
+        template.getMapper(cls).update(user);
+    }
+
+    public void delete(String userid) {
+        template.getMapper(cls).delete(userid);
+    }
+
+    public void update(String userid, String pass) {
+        template.getMapper(cls).pwUser(userid, pass);
+    }
+
+    public String search(User user, String url) {
+        String col = url.equals("pw") ? "password" : "userid";
+        param.clear();
+        param.put("col", col);
+        param.put("userid", user.getUserid());
+        param.put("email", user.getEmail());
+        param.put("phoneno", user.getPhoneno());
+        return template.getMapper(cls).search(param);
+    }
+
+    public List<User> list() {
+        param.clear();
+        return template.getMapper(cls).selectList(param);
+    }
+
+    public List<User> list(String[] idchks) {
+        param.clear();
+        param.put("userids", idchks);
+        return template.getMapper(cls).selectList(param);
+    }
+}
