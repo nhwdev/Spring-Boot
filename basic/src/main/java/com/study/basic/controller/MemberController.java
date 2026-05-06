@@ -28,13 +28,13 @@ public class MemberController {
 
     @PostMapping("/join")
     public String joinMember(@ModelAttribute MemberForm memberForm){
-        memberRepository.save(memberForm.toEntity());
-        return "";
+        Member joined = memberRepository.save(memberForm.toEntity());
+        return "redirect:/members/" + joined.getId();
     }
 
     @GetMapping("/members/{id}")
     public String show(@PathVariable long id, Model model) {
-        model.addAttribute("member", memberRepository.findById(id));
+        model.addAttribute("member", memberRepository.findById(id).orElse(null));
         return "/members/show";
     }
 
