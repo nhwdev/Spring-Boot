@@ -127,8 +127,10 @@ $RECYCLE.BIN/
 *.temp
 logs/
 
-/src/main/java/config/DBConfig.java
 # =====================
 # 민감정보 보호
 # =====================
 src/main/resources/application.properties
+/src/main/java/config/DBConfig.java
+/shop/src/main/resources/application.properties
+/shop/.factorypath
