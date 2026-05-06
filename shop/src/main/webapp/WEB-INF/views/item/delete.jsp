@@ -8,7 +8,7 @@
 <h2>상품 삭제 전 확인</h2>
 <table class="table">
     <tr>
-        <td><img src="../img/${item.pictureUrl}"/></td>
+        <td><img src="${path}/upload/${item.pictureUrl}"/></td>
         <td>
             <table>
                 <tr>

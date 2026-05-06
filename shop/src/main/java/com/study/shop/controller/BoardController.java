@@ -235,7 +235,7 @@ public class BoardController {
      *    변경 실패 : "게시글 수정시 오류 발생" update 이동
      */
     @PostMapping("update")
-    public String update(@Valid Board board, BindingResult bindingResult, HttpServletRequest request) {
+    public String update(@Valid Board board, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             return null;
         }
@@ -248,7 +248,7 @@ public class BoardController {
         try {
             // 1. DB의 내용을 등록된 내용으로 변경 : writer, title, content, file1
             // 2. file 업로드
-            service.updateBoard(board, request);
+            service.updateBoard(board);
             return "redirect:list";
         } catch (Exception e) {
             e.printStackTrace();

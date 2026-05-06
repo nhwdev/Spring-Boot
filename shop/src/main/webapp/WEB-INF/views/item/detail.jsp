@@ -8,7 +8,7 @@
 <h2>상품 상세보기</h2>
 <table class="table">
     <tr>
-        <td><img src="${item.pictureUrl}"/></td>
+        <td><img src="${path}/upload/${item.pictureUrl}"/></td>
         <td>
             <table>
                 <tr>

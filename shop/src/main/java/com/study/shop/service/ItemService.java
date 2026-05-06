@@ -38,9 +38,9 @@ public class ItemService {
         itemDao.delete(id);
     }
 
-    public void crtItem(Item item, HttpServletRequest request) {
+    public void crtItem(Item item) {
         if (item.getPicture() != null & !item.getPicture().isEmpty()) { // 업로드된 파일 존재
-            String path = RESOURCES_DIR + "static/img/"; // 업로드 되는 폴더
+            String path = RESOURCES_DIR + "static/upload/"; // 업로드 되는 폴더
             uploadFileCreate(item.getPicture(), path);
             item.setPictureUrl(item.getPicture().getOriginalFilename());
         }
@@ -49,9 +49,9 @@ public class ItemService {
         itemDao.insert(item);
     }
 
-    public void updItem(@Valid Item item, HttpServletRequest request) {
+    public void updItem(@Valid Item item) {
         if (item.getPicture() != null && !item.getPicture().isEmpty()) {
-            String path = RESOURCES_DIR + "img/";
+            String path = RESOURCES_DIR + "static/upload/";
             uploadFileCreate(item.getPicture(), path);
             item.setPictureUrl(item.getPicture().getOriginalFilename());
         }

@@ -65,7 +65,7 @@ public class ItemController {
     }
 
     @PostMapping("create") // Post 방식 요청
-    public ModelAndView create(@Valid Item item, BindingResult bindingResult, HttpServletRequest request) {
+    public ModelAndView create(@Valid Item item, BindingResult bindingResult) {
         /*
          * Item 객체에 파라미터 정보와, 파일정보 저장
          * 파라미터 값과 Item 객체의 프로퍼티 값을 비교하여 저장
@@ -75,7 +75,7 @@ public class ItemController {
             return mav;
         }
         // 입력값 검증 완료시 실행
-        service.crtItem(item, request);
+        service.crtItem(item);
         mav.setViewName("redirect:list");
         return mav;
     }
@@ -86,7 +86,7 @@ public class ItemController {
         if (bindingResult.hasErrors()) {
             return mav;
         }
-        service.updItem(item, request);
+        service.updItem(item);
         mav.setViewName("redirect:detail?id=" + item.getId());
         return mav;
     }

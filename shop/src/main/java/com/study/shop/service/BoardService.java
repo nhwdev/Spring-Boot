@@ -29,7 +29,7 @@ public class BoardService {
         board.setNum(maxNum + 1);
         board.setGrp(maxNum + 1); // 원글의 경우 grp 컬럼의 값은 num 컬럼의 값과 같음
         if (board.getFile1() != null && !board.getFile1().isEmpty()) { // 업로드된 파일 ⭕
-            String path = RESOURCES_DIR + "static/file/"; // 업로드 되는 폴더설정
+            String path = RESOURCES_DIR + "static/upload/"; // 업로드 되는 폴더설정
             uploadFileCreate(board.getFile1(), path); // 파일 업로드
             board.setFileurl(board.getFile1().getOriginalFilename()); // 파일 이름 설정
         }
@@ -74,10 +74,10 @@ public class BoardService {
         dao.insert(board);
     }
 
-    public void updateBoard(Board board, HttpServletRequest request) {
+    public void updateBoard(Board board) {
         // 첨부파일 업로드
         if (board.getFile1() != null && !board.getFile1().isEmpty()) { // 첨부파일이 수정된 경우.
-            String path = RESOURCES_DIR + "static/file/";
+            String path = RESOURCES_DIR + "static/upload/";
             uploadFileCreate(board.getFile1(), path);
             board.setFileurl(board.getFile1().getOriginalFilename()); //첨부 파일이름 fileUrl 프로퍼티 값 변경
         }

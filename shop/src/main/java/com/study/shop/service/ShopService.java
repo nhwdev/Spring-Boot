@@ -180,7 +180,7 @@ public class ShopService {
     }
 
     public String summernoteImageUpload(MultipartFile multipartFile) {
-        File dir = new File(RESOURCES_DIR + "static/image/");
+        File dir = new File(RESOURCES_DIR + "static/upload/");
         if (!dir.exists()) dir.mkdirs();
         String filesystemName = multipartFile.getOriginalFilename();
         File file = new File(dir, filesystemName);
@@ -190,7 +190,7 @@ public class ShopService {
             e.printStackTrace();
         }
 
-        return "/image/" + filesystemName;
+        return "/upload/" + filesystemName;
     }
 
     public String logoCrawling() {

@@ -52,7 +52,7 @@
         <td>첨부파일</td>
         <td>&nbsp;
             <c:if test="${!empty board.fileurl}">
-                <a href="${path}/file/${board.fileurl}">${board.fileurl}</a>
+                <a href="${path}/upload/${board.fileurl}">${board.fileurl}</a>
             </c:if></td>
     </tr>
     <tr>
