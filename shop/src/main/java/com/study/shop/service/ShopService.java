@@ -1,11 +1,10 @@
 package com.study.shop.service;
 
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
+import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -14,17 +13,24 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.net.http.HttpClient;
-import java.net.http.HttpRequest;
-import java.net.http.HttpResponse;
 import java.util.*;
 
 @Service
 public class ShopService {
     @Value("${resources.dir}") // application.properties 파일의 정보 가져오기
     private String RESOURCES_DIR; // resources.dir 의 값
+    /*
+     * Spring AI에서 제공되는 클래스
+     * OPEN AI에게 요청하는 클래스
+     * application.properties 파일의 spring.ai.openai.api-key 값을 사용
+     * spring.ai.openai.api-key : 시스템 환경변수에 등록된 키값으로 설정
+     */
+    private ChatClient chatClient; // OPENAI에게 요청 클래스.
+
+    // 생성자를 통해 ChatClient 객체 주입
+    public ShopService(ChatClient.Builder chatClientBuilder) {
+        chatClient = chatClientBuilder.build();
+    }
 
     public String sidoSelect1(String si, String gu) {
         BufferedReader br = null;
@@ -206,14 +212,22 @@ public class ShopService {
         return src;
     }
 
-    public String getChatGPTResponse(String question) throws URISyntaxException, IOException, InterruptedException {
+    public String getChatGPTResponse(String question) { // 기본 모델 : gpt-4o-mini
+        return chatClient.prompt() // 챗봇의 시작
+//                .system("당신은 자바 전문가 입니다.") //정체성 설정
+                .user(question) // 질문사항
+                .call() // openai에 요청
+                .content(); // 응답 메시지
+    }
+
+/*    public String getChatGPTResponse(String question) throws URISyntaxException, IOException, InterruptedException {
         final String API_KEY = ""; // OpenAI에서 제공하는 key 값
         final String ENDPOINT = "https://api.openai.com/v1/chat/completions"; // openAI에 요청하는 URL
 
         HttpClient client = HttpClient.newHttpClient(); // openAI에 요청할 수 있는 객체
         Map<String, Object> requestBody = new HashMap<>();
         requestBody.put("model", "gpt-3.5-turbo"); // gtp의 AI모델 부분 설정
-        /*
+        *//*
          * new HashMap(){} → 이름없는 내부객체
          * {             } → 인스턴스 초기화 블럭
          *
@@ -223,7 +237,7 @@ public class ShopService {
          *      put("role", "system");
          *      put("content", "당신은 자바 전문가 입니다.");
          * }}
-         */
+     *//*
         requestBody.put("messages", new Object[]{ // 요청 메시지
                 new HashMap<String, String>() {
                     { //질문내용
@@ -233,11 +247,11 @@ public class ShopService {
                 },
                 Map.of("role", "system", "content", "당신은 자바 전문가 입니다.")
         });
-        /*
+        *//*
          * role :
          *  system : 페르소나(정체성) 설정. 대화의 규칙, 맥락 구체화 시킬수 있는 매시지. 대화 시작시 1번. 옵션. 생략 가능
          *  user : 실제 질문. 필수 데이터
-         */
+     *//*
         // 자바의 객체를 JSON 형식의 문자열로 변환 할 수 있는 객체 생성
         ObjectMapper objectMapper = new ObjectMapper();
         // requestBody 객체를 json 형식의 문자열로 변경
@@ -268,5 +282,5 @@ public class ShopService {
         } else { // GPT 응답시 오류 발생
             throw new RuntimeException("API 요청 실패: " + response.body());
         }
-    }
+    }*/
 }

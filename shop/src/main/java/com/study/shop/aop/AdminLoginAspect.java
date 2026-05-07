@@ -14,7 +14,7 @@ import org.springframework.web.context.request.ServletRequestAttributes; // 서�
 @Aspect // 이 클래스를 AOP Aspect로 선언
 @Component // Spring 빈으로 등록
 public class AdminLoginAspect {
-    @Around("execution(* controller.AdminController.*(..))") // AdminController의 모든 메서드 실행 전후에 적용
+    @Around("execution(* com.study.shop.controller.AdminController.*(..))") // AdminController의 모든 메서드 실행 전후에 적용
     public Object adminCheck(ProceedingJoinPoint joinPoint)
             throws Throwable {
         HttpSession session = null; // 세션 변수 초기화

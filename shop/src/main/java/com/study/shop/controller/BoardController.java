@@ -249,7 +249,7 @@ public class BoardController {
             // 1. DB의 내용을 등록된 내용으로 변경 : writer, title, content, file1
             // 2. file 업로드
             service.updateBoard(board);
-            return "redirect:list";
+            return "redirect:list?boardid=" + board.getBoardid();
         } catch (Exception e) {
             e.printStackTrace();
             throw new ShopException("게시글 수정에 실패했습니다.", "update?num=" + board.getNum());

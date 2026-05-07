@@ -9,8 +9,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.IOException;
-import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -93,12 +91,12 @@ public class AjaxController {
     @PostMapping(value = "gptquestion", produces = "text/html; charset=utf-8")
     public String gptquestion(String question) {
         String gptResponse = null;
-        try {
+//        try {
             // gptResponse : gpt의 응답 메시지
             gptResponse = service.getChatGPTResponse(question);
-        } catch (URISyntaxException | IOException | InterruptedException e) {
-            e.printStackTrace();
-        }
+//        } catch (URISyntaxException | IOException | InterruptedException e) {
+//            e.printStackTrace();
+//        }
         return gptResponse;
     }
 }

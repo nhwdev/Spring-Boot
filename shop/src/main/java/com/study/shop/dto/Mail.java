@@ -12,9 +12,7 @@ import java.util.List;
 @Setter
 @ToString
 public class Mail {
-    @NotEmpty(message = "아이디를 입력하세요.")
     private String googleid;
-    @NotEmpty(message = "패스워드를 입력하세요.")
     private String googlepw;
     private String recipient;
     @NotEmpty(message = "제목을 입력하세요.")
