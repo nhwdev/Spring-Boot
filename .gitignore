@@ -134,3 +134,5 @@ src/main/resources/application.properties
 /src/main/java/config/DBConfig.java
 /shop/src/main/resources/application.properties
 /shop/.factorypath
+/shop_jpa/src/main/resources/application.properties
+/shop_jpa/.factorypath
