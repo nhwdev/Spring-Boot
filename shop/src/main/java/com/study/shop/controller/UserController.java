@@ -20,6 +20,7 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -51,6 +52,11 @@ public class UserController {
     @Autowired
     private ItemService itemService;
 
+    @Value("${my.naver.id}")
+    private String NAVER_ID;
+    @Value("${my.naver.pw}")
+    private String NAVER_PW;
+
     // http://localhost:8080/shop1/user/join → /WEB-INF/view/user/join.jsp
     @GetMapping("*") // Get 방식의 모든 요청
     public ModelAndView form() {
@@ -71,7 +77,7 @@ public class UserController {
 
         // ✅ 네이버 개발자 센터에서 발급받은 Client ID
         // 참고: https://developers.naver.com → 내 애플리케이션
-        String clientID = "0EA31YQT2my9OMMRgYlI";
+        String clientID = NAVER_ID;
 
         // ✅ 네이버가 로그인 완료 후 code, state를 넘겨줄 우리 서버 주소
         // 네이버 개발자 센터에 등록한 Callback URL과 반드시 동일해야 함
@@ -117,8 +123,8 @@ public class UserController {
         System.out.println("2.session.id=" + session.getId());
 
         // ✅ 네이버 개발자 센터(https://developers.naver.com)에서 발급받은 앱 정보
-        String clientID = "0EA31YQT2my9OMMRgYlI";
-        String clientSecret = "Q7VSuVV9Qz";
+        String clientID = NAVER_ID;
+        String clientSecret = NAVER_PW;
 
         // ✅ 네이버 개발자 센터에 등록한 Callback URL과 동일해야 함
         String redirectURI = URLEncoder.encode("YOUR_CALLBACK_URL", StandardCharsets.UTF_8);

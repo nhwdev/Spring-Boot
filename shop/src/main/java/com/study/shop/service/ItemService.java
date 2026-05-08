@@ -4,7 +4,6 @@ import com.study.shop.dao.ItemDao;
 import com.study.shop.dao.OrderDao;
 import com.study.shop.dao.OrderItemDao;
 import com.study.shop.dto.*;
-import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;

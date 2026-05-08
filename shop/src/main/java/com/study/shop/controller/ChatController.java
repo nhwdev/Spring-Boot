@@ -3,6 +3,7 @@ package com.study.shop.controller;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,11 +25,16 @@ public class ChatController {
         return null;
     }
 
+    @Value("${my.naver.id}")
+    private String NAVER_ID;
+    @Value("${my.naver.pw}")
+    private String NAVER_PW;
+
     @PostMapping("naversearch")
     @ResponseBody // view 없이 직접 데이터를 클라이언트로 전송
     public JSONObject naversearch(String data, Integer display, Integer start, String type) {
-        String clientID = "0EA31YQT2my9OMMRgYlI";
-        String clientSecret = "Q7VSuVV9Qz";
+        String clientID = NAVER_ID;
+        String clientSecret = NAVER_PW;
         StringBuilder json = new StringBuilder();
         /*
          * 100건의 데이터가 존재 :
