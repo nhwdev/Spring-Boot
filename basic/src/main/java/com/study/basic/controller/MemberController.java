@@ -32,15 +32,29 @@ public class MemberController {
         return "redirect:/members/" + joined.getId();
     }
 
+    @GetMapping("/members")
+    public String index(Model model) {
+        model.addAttribute("memberList", memberRepository.findAll());
+        return "/members/index";
+    }
+
     @GetMapping("/members/{id}")
     public String show(@PathVariable long id, Model model) {
         model.addAttribute("member", memberRepository.findById(id).orElse(null));
         return "/members/show";
     }
 
-    @GetMapping("/members")
-    public String index(Model model) {
-        model.addAttribute("memberList", memberRepository.findAll());
-        return "/members/index";
+
+    @GetMapping("/members/{id}/edit")
+    public String edit(@PathVariable long id, Model model) {
+        Member memberEntity = memberRepository.findById(id).orElseThrow();
+        model.addAttribute("member", memberEntity);
+        return "/members/edit";
+    }
+
+    @PostMapping("/members/update")
+    public String update(MemberForm memberForm) {
+        memberRepository.save(memberForm.toEntity());
+        return "redirect:/members/" + memberForm.getId();
     }
 }
