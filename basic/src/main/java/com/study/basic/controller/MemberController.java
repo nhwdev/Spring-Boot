@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 public class MemberController {
@@ -56,5 +57,12 @@ public class MemberController {
     public String update(MemberForm memberForm) {
         memberRepository.save(memberForm.toEntity());
         return "redirect:/members/" + memberForm.getId();
+    }
+
+    @GetMapping("/members/{id}/delete")
+    public String delete(@PathVariable Long id, RedirectAttributes redirectAttributes) {
+        memberRepository.findById(id).ifPresent(memberRepository::delete);
+        redirectAttributes.addFlashAttribute("msg", "삭제되었습니다!");
+        return "redirect:/members";
     }
 }
