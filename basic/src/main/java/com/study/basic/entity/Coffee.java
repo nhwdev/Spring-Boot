@@ -11,13 +11,21 @@ import lombok.ToString;
 @Getter
 @ToString
 @Entity
-public class Member {
-
+public class Coffee {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private long id;
     @Column
-    private String email;
+    private String name;
     @Column
-    private String password;
+    private String price;
+
+    public void patch(Coffee coffee) {
+        if(name != null){
+            name = coffee.name;
+        }
+        if(price != null){
+            price = coffee.price;
+        }
+    }
 }
