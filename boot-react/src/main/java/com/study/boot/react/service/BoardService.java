@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
+import java.util.Map;
 
 @Service
 public class BoardService {
@@ -48,6 +49,11 @@ public class BoardService {
     }
 
     public BoardEntity updateBoard(MultipartFile multipartFile, BoardDto boardDto) {
+
+        BoardEntity target = boardRepository.findById(boardDto.getNum()).orElseThrow(() -> new RuntimeException("해당 게시글이 없습니다."));
+
+        if (!target.getPass().equals(boardDto.getPass())) throw new RuntimeException("비밀번호가 일치하지 않습니다.");
+
         String path = UPLOAD_PATH + "img/board/";
         File dir = new File(path);
         if (!dir.exists()) dir.mkdirs();
@@ -63,13 +69,23 @@ public class BoardService {
             boardDto.setFile1(fileName);
         }
 
-        BoardEntity target = boardRepository.findById(boardDto.getNum()).orElse(null);
         BoardEntity boardEntity = new BoardEntity(boardDto);
-
-        if (target == null || boardEntity.getNum() != target.getNum()) {
-            throw new RuntimeException();
-        }
         target.patch(boardEntity);
         return boardRepository.save(target);
     }
+
+    public void deleteBoard(Map<String, ?> payload) {
+        int num = Integer.parseInt(String.valueOf(payload.get("num")));
+        BoardEntity target = boardRepository.findById(num).
+                orElseThrow(() -> new IllegalArgumentException("해당 게시글이 없습니다."));
+        String password = (String) payload.get("pass");
+        if (!target.getPass().equals(password)) {
+            throw new IllegalArgumentException("비밀번호가 일치하지 않습니다.");
+        }
+        boardRepository.delete(target);
+    }
+
+//    public void boardUpdate(BoardEntity boardEntity) {
+//        boardRepository.save(boardEntity);
+//    }
 }

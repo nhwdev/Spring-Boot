@@ -16,7 +16,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
-
 /*
  * @CrossOrigin: CORS(Cross-Origin Resource Sharing) 설정
  *  -Spring Boot 환경에서 다른 도메인과 자원 공유 허용
@@ -130,4 +129,67 @@ public class BoardController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
     }
+
+    @DeleteMapping("/boardDeletePro")
+    public ResponseEntity<?> delete(@RequestBody Map<String, ?> payload) {
+        try {
+            boardService.deleteBoard(payload);
+            return ResponseEntity.status(HttpStatus.OK).build();
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+        }
+    }
+
+//    @GetMapping("boardUpdateForm")
+//    public Map<String, Object> boardUpdateForm(int num){
+//        BoardEntity board = boardService.getBoard(num);
+//        boardService.addReadCount(num);
+//        String boardName = null;
+//        switch (Objects.requireNonNullElse(board.getBoardid(), "1")) {
+//            case "1" -> boardName = "공지사항";
+//            case "2" -> boardName = "자유게시판";
+//            case "3" -> boardName = "QNA";
+//        };
+//        return Map.of("board", board, "boardName", boardName);
+//    }
+
+//    @PostMapping("boardUpdatePro")
+//    public Map<String, Object> boardUpdatePro(@RequestParam(value="file2", required = false) MultipartFile multipartFile, BoardDto boardDto) throws IllegalStateException, IOException{
+//        BoardEntity dbBoard = boardService.getBoard(boardDto.getNum());
+//        Map<String, Object> map = new HashMap<>(); // React 전송할 결과 데이터 → React는 JSON 형식으로 전달
+//        // boardDto.getPass() : 입력된 비밀번호
+//        // dbBoard.getPass() : DB에 저장된 비밀번호
+//        if(!boardDto.getPass().equals(dbBoard.getPass())) { // 비밀번호 오류
+//            map.put("msg", "비밀번호 오류");
+//            map.put("code", 100);
+//            return map;
+//        }
+//        String path=UPLOAD_PATH + "img/board/";
+//        File dir = new File(path);
+//        /*
+//         * mkdirs() : 폴더의 깊이 여러개. (1개인 경우도 사용 ⭕)
+//         * mkdir() : 폴더의 깊이가 1개
+//         */
+//        if(!dir.exists()) dir.mkdirs(); // 폴더가 없으면 생성
+//        String fileName="";
+//        if(multipartFile != null && !multipartFile.isEmpty()) { // 첨부파일 업로드 상태
+//            File file = new File(path, multipartFile.getOriginalFilename());
+//            fileName= multipartFile.getOriginalFilename();
+//            multipartFile.transferTo(file); // 업로드 실행
+//            boardDto.setFile1(fileName); // 수정 전 파일이름을 업로드 된 파일의 이름 변경
+//        } else {
+//            boardDto.setFile1(dbBoard.getFile1()); // 수정 전 파일이름
+//        }
+//        try {
+//            boardDto.setRegdate(dbBoard.getRegdate()); // 게시물 생성 일자 유지
+//            boardService.boardUpdate(new BoardEntity(boardDto)); // save(BoardEntity) → 모든 컬럼 변경
+//            map.put("msg", "게시글 수정완료");
+//            map.put("code", 0);
+//        } catch (Exception e) {
+//            map.put("msg", "게시글 수정에 실패 했습니다.");
+//            map.put("code", 200);
+//            e.printStackTrace();
+//        }
+//        return map;
+//    }
 }
