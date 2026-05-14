@@ -116,7 +116,6 @@ public class BoardController {
             case "2" -> boardName = "자유게시판";
             case "3" -> boardName = "QNA";
         }
-        ;
         return Map.of("board", board, "boardName", boardName);
     }
 
