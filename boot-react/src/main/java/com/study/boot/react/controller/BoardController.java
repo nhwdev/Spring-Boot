@@ -31,7 +31,7 @@ import java.util.Objects;
 public class BoardController {
     @Autowired
     private BoardService boardService;
-    @Value("${board.upload.dir}")
+    @Value("${file.upload.dir}")
     private String UPLOAD_PATH;
 
     @GetMapping("/boardList")

@@ -19,9 +19,9 @@ import java.util.Map;
 @Service
 public class BoardService {
     @Autowired
-    BoardRepository boardRepository;
+    private BoardRepository boardRepository;
 
-    @Value("${board.upload.dir}")
+    @Value("${file.upload.dir}")
     private String UPLOAD_PATH;
 
     public int boardCount(String boardId) {

@@ -7,12 +7,14 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
 public class MvcConfig implements WebMvcConfigurer {
-    @Value("${board.upload.dir}")
-    private String BOARD_UPLOAD_DIR;
+    @Value("${file.upload.dir}")
+    private String FILE_UPLOAD_DIR;
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry resourceHandlerRegistry) {
         resourceHandlerRegistry.addResourceHandler("/img/board/**")
-                .addResourceLocations("file:///" + BOARD_UPLOAD_DIR + "/img/board/");
+                .addResourceLocations("file:///" + FILE_UPLOAD_DIR + "img/board/");
+        resourceHandlerRegistry.addResourceHandler("/img/member/**")
+                .addResourceLocations("file:///" + FILE_UPLOAD_DIR + "img/profile/**");
     }
 }

@@ -1,14 +1,18 @@
 package com.study.boot.react.entity;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.Date;
 
 @Entity
+@Builder
 @Data
 @NoArgsConstructor
+@AllArgsConstructor
 public class CommentEntity {
 
     @Id
@@ -36,6 +40,12 @@ public class CommentEntity {
     public void patch(CommentEntity incomingEntity) {
         if (incomingEntity.getContent() != null) {
             this.content = incomingEntity.getContent();
+        }
+    }
+
+    public void authenticate(String inputPass) {
+        if (!inputPass.equals(this.pass)) {
+            throw new IllegalArgumentException("비밀번호가 일치하지 않습니다.");
         }
     }
 }
